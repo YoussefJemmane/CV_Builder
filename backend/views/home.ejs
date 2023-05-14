@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Builder</title>
+  <link rel="stylesheet" href="css/tailwind.css">
+</head>
+<body>
+  <h1 class="text-2xl text-lime-600">Your CVs Here</h1>
+  <a href="/api/resumes/create">Create a CV</a>
+  <div class="flex flex-col">
+    <% resumes.forEach(resume => { %>
+      <div class="grid ">
+        
+        <%= resume.personalInfo.name %>
+        <!-- template 1 -->
+        <a href="/api/resumes/<%= resume.id %>/template">Choose Template </a>
+        
+      </div>
+    <% }) %>
+</body>
+</html>

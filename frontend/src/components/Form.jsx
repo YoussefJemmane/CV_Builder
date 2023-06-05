@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
 import Navbar from './Navbar';
 
 
 const Alpine = () => {
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user === null) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+  console.log(user);
   const [personalInfo, setPersonalInfo] = useState({
     name: "",
     email: "",
     profession: "",
     phone: "",
     profile: "",
+    user_id: user ? user.id : "",
   });
+
   const [educations, setEducations] = useState([{
     institution: "",
     degree: "",
@@ -38,13 +50,9 @@ const Alpine = () => {
     description: "",
     link: "",
   }]);
-  // usenavigate
-
-
-  // Handle form submission
 
   async function postResume() {
-    const response = await fetch("http://localhost:3000/api/resumes", {
+    const response = await fetch("http://localhost:3000/api/resumes/resume", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,6 +64,7 @@ const Alpine = () => {
         skills,
         technicals,
         projects,
+
       }),
     });
     const resume = await response.json();
@@ -63,6 +72,7 @@ const Alpine = () => {
     location.href = "/";
   }
 
+  
 
 
   // Add education
@@ -130,6 +140,7 @@ const Alpine = () => {
       <Navbar />
       <div className='flex justify-center'>
         <div x-data="{ step: 1 }">
+
           <form className='m-3'>
             <div className='rounded border p-3 '>
               <div className='flex justify-center'>

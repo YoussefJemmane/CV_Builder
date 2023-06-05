@@ -1,33 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useResumesContext } from '../hooks/useResumeContext';
 import Navbar from './Navbar';
 
 
 function List() {
-  const [resumes, setResumes] = useState([]);
+  const { resumes, dispatch } = useResumesContext()
+  const { user } = useAuthContext()
 
   useEffect(() => {
-    // fetch data
-    async function dataFetch() {
-      const response = await fetch(`http://localhost:3000/api/resumes`)
-      const data = await response.json();
-      setResumes(data)
+    const fetchResumes = async () => {
+      const id = user.id;
+      const response = await fetch(`http://127.0.0.1:3000/api/resumes/resumes/${id}`, {
+        headers: { 'Authorization': `Bearer ${user.token}` },
+      })
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({ type: 'SET_RESUMES', payload: json })
+      }
     }
 
-    dataFetch();
-  }, []);
+    if (user) {
+      fetchResumes()
+    }
+  }, [dispatch, user])
+
+  const handleClick = async (resumeId, e) => {
+    e.preventDefault();
+    await fetch(`http://127.0.0.1:3000/api/resumes/resume/${resumeId}/delete`, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${user.token}` },
+    });
+
+    dispatch({ type: 'DELETE_RESUME', payload: resumeId });
+  };
 
 
 
-  
 
   return (
     <>
       <Navbar />
+
+
       <div className='flex justify-center'>
         <div>
           <div className='flex justify-center pb-4'>
 
-          <h2 className='text-3xl'>Resumes</h2>
+            <h2 className='text-3xl'>Resumes</h2>
           </div>
           {/* make a tailwind card that map the resumes and have button delete and update and a button to go to Template.jsx page */}
           <div className='flex flex-wrap justify-center'>
@@ -40,10 +61,11 @@ function List() {
                   </p>
                 </div>
                 <div className="flex justify-between p-3">
-                  
-                  <a href={`http://localhost:3000/api/resumes/delete/${resume._id}`} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-5">
+
+                  <button onClick={(e) => handleClick(resume._id, e)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-5">
                     Delete
-                  </a>
+                  </button>
+
                   <a href={`/template/${resume._id}`} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     Templates
                   </a>

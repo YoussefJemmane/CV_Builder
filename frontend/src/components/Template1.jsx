@@ -5,10 +5,10 @@ import Navbar from './Navbar';
 const Template1 = () => {
   const [resume, setResume] = useState(null);
   const resumeId = useParams().id;
-  const download = `http://localhost:3000/api/resumes/${resumeId}/template1/download`;
+  const download = `http://localhost:3000/api/resumes/resume/${resumeId}/template1/download`;
   useEffect(() => {
     async function getData() {
-      const response = await fetch(`http://localhost:3000/api/resumes/${resumeId}`)
+      const response = await fetch(`http://localhost:3000/api/resumes/resume/${resumeId}`)
       const data = await response.json();
       setResume(data)
     }

@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from './Navbar'
 
 const Home = () => {
+  
   return (
     <div>
       <Navbar/>
@@ -17,6 +18,8 @@ const Home = () => {
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
           Start Building
         </button>
+        <p>You don't have an account</p>
+        <a href="/register" className="text-blue-500 hover:text-blue-700">Register</a>
         </form>
         
       </main>

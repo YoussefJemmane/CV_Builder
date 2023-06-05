@@ -6,7 +6,7 @@ const DownloadTemplate1 = () => {
   const resumeId = useParams().id;
   useEffect(() => {
     async function getData() {
-      const response = await fetch(`http://localhost:3000/api/resumes/${resumeId}`)
+      const response = await fetch(`http://localhost:3000/api/resumes/resume/${resumeId}`)
       const data = await response.json();
       setResume(data)
     }

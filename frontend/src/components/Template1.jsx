@@ -16,7 +16,7 @@ const Template1 = () => {
     console.log(resume);
   }, [])
   return (
-    <>
+    <> 
       <Navbar />
       <div className='p-[20px] '>
         <div className='flex justify-between'>

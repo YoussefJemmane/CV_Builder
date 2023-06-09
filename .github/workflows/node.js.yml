@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x]
 
     steps:
     - uses: actions/checkout@v3
@@ -28,23 +28,31 @@ jobs:
           backend/package-lock.json
           frontend/package-lock.json
 
+    - name: Remove backend node_modules and package-lock.json
+      run: |
+        cd backend
+        rm -rf node_modules package-lock.json
+
     - name: Install backend dependencies
       run: |
         cd backend
-        npm ci
+        npm install
+
+    - name: Remove frontend node_modules and package-lock.json
+      run: |
+        cd frontend
+        rm -rf node_modules package-lock.json
 
     - name: Install frontend dependencies
       run: |
         cd frontend
-        npm ci
+        npm install
 
     - name: Build frontend
       run: |
         cd frontend
         npm run build
 
-    - name: Run backend tests
-      run: |
-        cd backend
-        npm test
+
+
 

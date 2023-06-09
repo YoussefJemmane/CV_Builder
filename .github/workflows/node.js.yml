@@ -24,6 +24,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: |
+          backend/package-lock.json
+          frontend/package-lock.json
 
     - name: Install backend dependencies
       run: |
@@ -44,3 +47,4 @@ jobs:
       run: |
         cd backend
         npm test
+

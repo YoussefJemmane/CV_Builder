@@ -6,7 +6,7 @@ const educationsSchema = new mongoose.Schema({
   degree: String,
   field: String,
   diplome: String,
-});
+}); 
 
 const experiencesSchema = new mongoose.Schema({
   company: String,

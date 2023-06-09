@@ -66,7 +66,7 @@ const DownloadTemplate1 = async (req, res) => {
 }
 const DownloadTemplate2 = async (req, res) => {
   const resume = await Resume.findById(req.params.id);
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: "new",executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
   const page = await browser.newPage();
   await page.goto(`http://localhost:5173/download/template2/${resume._id}`, { waitUntil: 'networkidle0' });
   const pdf = await page.pdf({ format: 'A4' });
@@ -78,7 +78,7 @@ const DownloadTemplate2 = async (req, res) => {
 }
 const DownloadTemplate3 = async (req, res) => {
   const resume = await Resume.findById(req.params.id);
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: "new",executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
   const page = await browser.newPage();
   await page.goto(`http://localhost:5173/download/template3/${resume._id}`, { waitUntil: 'networkidle0' });
   const pdf = await page.pdf({ format: 'A4' });

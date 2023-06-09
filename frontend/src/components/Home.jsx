@@ -1,29 +1,34 @@
-import React from 'react'
-import Navbar from './Navbar'
+import React from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import Navbar from './Navbar';
 
 const Home = () => {
-  
+  const { user } = useAuthContext();
+  console.log(user);
   return (
     <div>
-      <Navbar/>
-      <div className="container mx-auto p-4">
-      <header className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4">CV Builder</h1>
-        <p className="text-gray-600">
-          Create a professional resume in minutes with our easy-to-use CV builder.
-        </p>
-      </header>
-      <main className="text-center">
-        <form action="/create" method="get">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
-          Start Building
-        </button>
-        <p>You don't have an account</p>
-        <a href="/register" className="text-blue-500 hover:text-blue-700">Register</a>
-        </form>
-        
-      </main>
-    </div>
+      <Navbar />
+      <div className="hero min-h-screen bg-base-200">
+        <div className="hero-content text-center">
+          <div className="max-w-md">
+            <h1 className="text-5xl font-bold">CV Builder</h1>
+            <p className="py-6 text-2xl">Create a professional resume in minutes with our easy-to-use CV builder.
+            </p>
+            {
+              user ? <div className="alert alert-success">
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>Your Logged in ! Mr : {user.name}</span>
+              </div> : <form action="/create" method="get">
+                <button className="btn btn-primary">
+                  Start Building
+                </button>
+                <p className="py-6">You don't have an account ?</p>
+                <a href="/register" className="btn btn-success" data-theme="dark">Register</a>
+              </form>
+            }
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

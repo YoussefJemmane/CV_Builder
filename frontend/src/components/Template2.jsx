@@ -18,14 +18,14 @@ const Template2 = () => {
   return (
     <>
       <Navbar />
-      <div className='p-[20px] '>
-        <div className='flex justify-between'>
-          <a href={`/template/${resumeId}`} className='rounded border p-2 bg-gray-900 text-white' >Go Back</a>
-          <a href={download} className='mr-3 rounded border p-2 bg-green-900 text-white'>Download</a>
+      <div className='p-[20px]  bg-base-200  min-h-screen'>
+      <div className='flex justify-between'>
+          <a href={`/template/${resumeId}`} className='btn btn-accent' data-theme="emerald" >Go Back</a>
+          <a href={download} className='btn btn-success' data-theme="emerald">Download</a>
         </div>
         <div>
       <div className='flex justify-center '>
-        <div className='w-[800px] border rounded'>
+        <div className='w-[800px] border rounded bg-white'>
           <div className='flex justify-center'>
             <h1 className='pt-2 font-bold uppercase underline text-2xl'>{resume && resume.personalInfo.name}</h1>
           </div>

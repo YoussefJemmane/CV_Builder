@@ -28,15 +28,17 @@ function App() {
     // localStorage.removeItem('token');
   };
 
+  // default url for api calls
+  
   return (
     <>
       <AuthContextProvider value={{ user, logout }}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<AuthContextProvider children={<Login />} />} />
+            <Route path="/" element={<AuthContextProvider children={<Home />} />} />
+            <Route  path="/login" element={<AuthContextProvider children={<Login />} />} />
             <Route path="/register" element={<AuthContextProvider children={<Register />} />} />
-            <Route path="/create" element={<Form />} />
+            <Route path="/create" element={<AuthContextProvider children={<ResumesContextProvider children={<Form/>}/>} />} />
             <Route path="/list" element={<AuthContextProvider children={< ResumesContextProvider children={<List />} />} />} />
             <Route path="/template/:id" element={<AuthContextProvider children={< ResumesContextProvider children={<Template />} />} />} />
             <Route path="/template1/:id" element={<AuthContextProvider children={< ResumesContextProvider children={<Template1 />} />} />} />

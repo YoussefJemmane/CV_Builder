@@ -28,10 +28,15 @@ jobs:
           backend/package-lock.json
           frontend/package-lock.json
 
+    - name: Remove backend node_modules and package-lock.json
+      run: |
+        cd backend
+        rm -rf node_modules package-lock.json
+
     - name: Install backend dependencies
       run: |
         cd backend
-        npm ci
+        npm install
 
     - name: Install frontend dependencies
       run: |
@@ -47,4 +52,5 @@ jobs:
       run: |
         cd backend
         npm test
+
 

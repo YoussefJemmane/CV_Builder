@@ -13,6 +13,7 @@ const Register = () => {
     e.preventDefault()
 
     await signup(name, email, password)
+    console.log(name, email, password);
     if (!error) {
       navigate('/login');
     }

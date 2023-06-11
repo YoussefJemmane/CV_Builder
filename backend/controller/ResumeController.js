@@ -11,7 +11,7 @@ const ResumeList = async (req, res) => {
   } catch (error) {
     console.error("Error while querying resumes:", error);
   }
-  
+
 };
 
 
@@ -38,64 +38,72 @@ const DeleteResume = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 }
-
-const CreateResume = async (req, res) => {
-
-  const newResume = new Resume(req.body);
-  console.log(req.body);
+const EditResume = async (req, res) => {
   try {
-    await newResume.save();
+    await Resume.findByIdAndUpdate(req.params.id, req.body);
     res.redirect('http://localhost:5173/list');
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
+  const CreateResume = async (req, res) => {
 
-const DownloadTemplate1 = async (req, res) => {
-  const resume = await Resume.findById(req.params.id);
-  console.log(req.params.id);
-  const browser = await puppeteer.launch({ headless: "new", executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
-  const page = await browser.newPage();
-  await page.goto(`http://localhost:5173/download/template1/${resume._id}`, { waitUntil: 'networkidle0' });
-  const pdf = await page.pdf({ format: 'A4' });
+    const newResume = new Resume(req.body);
+    console.log(req.body);
+    try {
+      await newResume.save();
+      res.redirect('http://localhost:5173/list');
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
 
-  res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });
-  res.send(pdf);
+  const DownloadTemplate1 = async (req, res) => {
+    const resume = await Resume.findById(req.params.id);
+    console.log(req.params.id);
+    const browser = await puppeteer.launch({ headless: "new", executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
+    const page = await browser.newPage();
+    await page.goto(`http://localhost:5173/download/template1/${resume._id}`, { waitUntil: 'networkidle0' });
+    const pdf = await page.pdf({ format: 'A4' });
 
-  await browser.close();
-}
-const DownloadTemplate2 = async (req, res) => {
-  const resume = await Resume.findById(req.params.id);
-  const browser = await puppeteer.launch({ headless: "new",executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
-  const page = await browser.newPage();
-  await page.goto(`http://localhost:5173/download/template2/${resume._id}`, { waitUntil: 'networkidle0' });
-  const pdf = await page.pdf({ format: 'A4' });
+    res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });
+    res.send(pdf);
 
-  res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });
-  res.send(pdf);
+    await browser.close();
+  }
+  const DownloadTemplate2 = async (req, res) => {
+    const resume = await Resume.findById(req.params.id);
+    const browser = await puppeteer.launch({ headless: "new", executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
+    const page = await browser.newPage();
+    await page.goto(`http://localhost:5173/download/template2/${resume._id}`, { waitUntil: 'networkidle0' });
+    const pdf = await page.pdf({ format: 'A4' });
 
-  await browser.close();
-}
-const DownloadTemplate3 = async (req, res) => {
-  const resume = await Resume.findById(req.params.id);
-  const browser = await puppeteer.launch({ headless: "new",executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
-  const page = await browser.newPage();
-  await page.goto(`http://localhost:5173/download/template3/${resume._id}`, { waitUntil: 'networkidle0' });
-  const pdf = await page.pdf({ format: 'A4' });
+    res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });
+    res.send(pdf);
 
-  res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });
-  res.send(pdf);
+    await browser.close();
+  }
+  const DownloadTemplate3 = async (req, res) => {
+    const resume = await Resume.findById(req.params.id);
+    const browser = await puppeteer.launch({ headless: "new", executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
+    const page = await browser.newPage();
+    await page.goto(`http://localhost:5173/download/template3/${resume._id}`, { waitUntil: 'networkidle0' });
+    const pdf = await page.pdf({ format: 'A4' });
 
-  await browser.close();
-}
+    res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });
+    res.send(pdf);
 
-module.exports = {
-  ResumeList,
-  ShowResume,
-  ShowTemplates,
-  DeleteResume,
-  CreateResume,
-  DownloadTemplate1,
-  DownloadTemplate2,
-  DownloadTemplate3
-};
+    await browser.close();
+  }
+
+  module.exports = {
+    ResumeList,
+    ShowResume,
+    ShowTemplates,
+    DeleteResume,
+    CreateResume,
+    DownloadTemplate1,
+    DownloadTemplate2,
+    DownloadTemplate3,
+    EditResume
+  };

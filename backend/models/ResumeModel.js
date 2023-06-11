@@ -24,6 +24,9 @@ const skillsSchema = new mongoose.Schema({
 const technicalSchema = new mongoose.Schema({
   skill: String,
 })
+const languagesSchema = new mongoose.Schema({
+  name: String,
+})
 const projectsSchema = new mongoose.Schema({
   title: String,
   description: String,
@@ -44,6 +47,7 @@ const resumeSchema = new mongoose.Schema({
   experiences: [experiencesSchema],
   skills: [skillsSchema],
   projects: [projectsSchema],
+  languages: [languagesSchema],
 });
 
 

@@ -53,7 +53,7 @@ const Navbar = () => {
       
       <div className="navbar bg-base-100">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+          <a className="btn btn-ghost normal-case text-xl">CV Builder</a>
         </div>
         <div className="flex-none">
           <ul className="flex items-center space-x-4">{navLinks} {AuthNavLinks}</ul>

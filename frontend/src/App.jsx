@@ -1,4 +1,3 @@
-
 import { useState } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import DownloadTemplate1 from "./components/DownloadTemplate1"
@@ -17,19 +16,9 @@ import { AuthContextProvider } from "./context/AuthContext"
 import { ResumesContextProvider } from "./context/ResumesContext"
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-
-  // Set the user state here, e.g., after a login action
-
   const logout = () => {
-    // Clear user data and token
     setUser(null);
-    // You may also need to clear any tokens saved in localStorage or sessionStorage
-
-    // localStorage.removeItem('token');
   };
-
-  // default url for api calls
-  
   return (
     <>
       <AuthContextProvider value={{ user, logout }}>
@@ -53,5 +42,4 @@ function App() {
     </>
   )
 }
-
 export default App

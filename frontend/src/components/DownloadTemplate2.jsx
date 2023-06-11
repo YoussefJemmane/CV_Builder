@@ -133,7 +133,19 @@ const DownloadTemplate1 = () => {
               )
             })}
           </div>
+          <hr />
+          <div className='flex justify-start'>
+            <h1 className='pt-[10px] pl-[16px] font-bold uppercase '>Languages : </h1>
+          </div>
 
+          <div className='grid grid-cols-4'>
+            {resume && resume.languages.map((language, index) => (
+              <div className='pt-[10px] pl-[16px] pb-[10px]' key={index}>
+                <h1 className='font-bold'>{language.name}</h1>
+
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

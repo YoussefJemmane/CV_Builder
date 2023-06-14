@@ -9,7 +9,7 @@ const cors = require('cors')
 // cors
 // express app 
 const app = express()
-
+app.use('/uploads', express.static('uploads'));
 // middleware
 app.use(express.json())
 app.use(cors())

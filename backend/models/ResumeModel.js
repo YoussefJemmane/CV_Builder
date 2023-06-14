@@ -40,6 +40,7 @@ const resumeSchema = new mongoose.Schema({
     phone: String,
     profession: String,
     profile: String,
+    photo : String,
     user_id: String,
   },
   educations: [educationsSchema],

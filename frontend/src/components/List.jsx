@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useResumesContext } from '../hooks/useResumeContext';
 import Navbar from './Navbar';
+import { Link } from 'react-router-dom';
 
 
 function List() {
@@ -82,7 +83,11 @@ function List() {
                 <div className="font-bold text-5xl">You Have To Login</div>
                 <div className="font-bold text-2xl">To See Your Resumes</div>
                 <div className="card-actions justify-between pt-4">
-                  <button className="btn btn-accent" href="/login">Login</button>
+                  <button className="btn btn-accent" >
+                  <Link to="/login">
+                  Login
+                  </Link>
+                  </button>
                   
                 </div>
               </div>

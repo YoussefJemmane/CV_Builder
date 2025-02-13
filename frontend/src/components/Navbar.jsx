@@ -38,13 +38,13 @@ const Navbar = () => {
   ));
   const AuthNavLinks = AuthNavigation.map((navItem) => (
     <li key={navItem.name}>
-      <a
-        href={navItem.href}
+      <Link
+        to={navItem.href}
         className="btn btn-ghost normal-case"
         onClick={navItem.name === "Logout" ? logout : null}
       >
         {navItem.name}
-      </a>
+      </Link>
     </li>
   ));
   return (

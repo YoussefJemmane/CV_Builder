@@ -33,7 +33,8 @@ const ShowTemplates = async (req, res) => {
 const DeleteResume = async (req, res) => {
   try {
     await Resume.findByIdAndDelete(req.params.id);
-    res.redirect('http://localhost:5173/list');
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    res.redirect(`${frontendUrl}/list`);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -41,18 +42,19 @@ const DeleteResume = async (req, res) => {
 const EditResume = async (req, res) => {
   try {
     await Resume.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect('http://localhost:5173/list');
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    res.redirect(`${frontendUrl}/list`);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
 const CreateResume = async (req, res) => {
-
   const newResume = new Resume(req.body);
   console.log(req.body);
   try {
     await newResume.save();
-    res.redirect('http://localhost:5173/list');
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    res.redirect(`${frontendUrl}/list`);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -61,9 +63,21 @@ const CreateResume = async (req, res) => {
 const DownloadTemplate1 = async (req, res) => {
   const resume = await Resume.findById(req.params.id);
   console.log(req.params.id);
-  const browser = await puppeteer.launch({ headless: "new", executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
+
+  const puppeteerOptions = {
+    headless: "new",
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu'
+    ]
+  };
+
+  const browser = await puppeteer.launch(puppeteerOptions);
   const page = await browser.newPage();
-  await page.goto(`http://localhost:5173/download/template1/${resume._id}`, { waitUntil: 'networkidle0' });
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  await page.goto(`${frontendUrl}/download/template1/${resume._id}`, { waitUntil: 'networkidle0' });
   const pdf = await page.pdf({ format: 'A4' });
 
   res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });
@@ -73,9 +87,21 @@ const DownloadTemplate1 = async (req, res) => {
 }
 const DownloadTemplate2 = async (req, res) => {
   const resume = await Resume.findById(req.params.id);
-  const browser = await puppeteer.launch({ headless: "new", executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
+
+  const puppeteerOptions = {
+    headless: "new",
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu'
+    ]
+  };
+
+  const browser = await puppeteer.launch(puppeteerOptions);
   const page = await browser.newPage();
-  await page.goto(`http://localhost:5173/download/template2/${resume._id}`, { waitUntil: 'networkidle0' });
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  await page.goto(`${frontendUrl}/download/template2/${resume._id}`, { waitUntil: 'networkidle0' });
   const pdf = await page.pdf({ format: 'A4' });
 
   res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });
@@ -85,9 +111,21 @@ const DownloadTemplate2 = async (req, res) => {
 }
 const DownloadTemplate3 = async (req, res) => {
   const resume = await Resume.findById(req.params.id);
-  const browser = await puppeteer.launch({ headless: "new", executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
+
+  const puppeteerOptions = {
+    headless: "new",
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu'
+    ]
+  };
+
+  const browser = await puppeteer.launch(puppeteerOptions);
   const page = await browser.newPage();
-  await page.goto(`http://localhost:5173/download/template3/${resume._id}`, { waitUntil: 'networkidle0' });
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  await page.goto(`${frontendUrl}/download/template3/${resume._id}`, { waitUntil: 'networkidle0' });
   const pdf = await page.pdf({ format: 'A4' });
 
   res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length, 'Content-Disposition': `attachment; filename=${resume.personalInfo.name}_Resume.pdf` });

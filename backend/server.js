@@ -6,13 +6,20 @@ const resumeRoutes = require('./routes/resume')
 const userRoutes = require('./routes/user')
 const cors = require('cors')
 
-// cors
-// express app 
+// express app
 const app = express()
-app.use('/uploads', express.static('uploads'));
+
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true,
+  optionsSuccessStatus: 200
+}
+
 // middleware
+app.use(cors(corsOptions))
 app.use(express.json())
-app.use(cors())
+app.use('/uploads', express.static('uploads'))
 
 app.use((req, res, next) => {
   console.log(req.path, req.method)
@@ -23,14 +30,21 @@ app.use((req, res, next) => {
 app.use('/api/resumes', resumeRoutes)
 app.use('/api/user', userRoutes)
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     // listen for requests
-    app.listen(process.env.PORT, () => {
-      console.log('connected to db & listening on port', process.env.PORT)
+    const PORT = process.env.PORT || 3000
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log('connected to db & listening on port', PORT)
     })
   })
-  .catch((error) => { 
+  .catch((error) => {
     console.log(error)
+    process.exit(1)
   })
